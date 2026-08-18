@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATHLETIX – AI-Powered Sports Community & Booking Platform</title>
+  <meta name="description" content="Athletix is an AI-powered sports platform where players book facilities, join tournaments, connect with verified coaches, build balanced teams, and thrive in a global sports community.">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       SITE HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <!-- Brand Logo -->
+      <a href="#home" class="logo-brand" data-nav="home">
+        <div class="logo-icon-spark">⚡</div>
+        <span>ATHLETIX</span>
+      </a>
+
+      <!-- Main Navigation Menu -->
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link active" data-nav="home">Home</a></li>
+        <li><a href="#facilities" class="nav-link" data-nav="facilities">Facilities</a></li>
+        <li><a href="#tournaments" class="nav-link" data-nav="tournaments">Tournaments</a></li>
+        <li><a href="#coaches" class="nav-link" data-nav="coaches">Coaches</a></li>
+        <li><a href="#community" class="nav-link" data-nav="community">Community</a></li>
+        <li><a href="#about" class="nav-link" data-nav="about">About Us</a></li>
+        <li><a href="#admin" class="nav-link" data-nav="admin" style="color:var(--cyan);">Admin ⚡</a></li>
+      </ul>
+
+      <!-- Right Header Actions -->
+      <div class="nav-actions">
+        <!-- Universal Search Modal Trigger -->
+        <button class="btn-icon" data-open-search title="Search (Ctrl + K)">
+          🔍
+        </button>
+
+        <!-- Notification Center -->
+        <div class="notification-wrapper">
+          <button class="btn-icon" id="btnNotificationToggle" title="Notifications">
+            🔔
+            <span class="notification-badge">3</span>
+          </button>
+
+          <!-- Notification Dropdown -->
+          <div id="notificationDropdown" style="display:none; position:absolute; top:52px; right:0; width:340px; background:var(--bg-secondary); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:1.2rem; box-shadow:var(--shadow-lg); z-index:1500;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid var(--glass-border); padding-bottom:0.6rem;">
+              <span style="font-weight:700; font-size:0.95rem; color:white;">Notifications</span>
+              <span style="font-size:0.75rem; color:var(--emerald-neon); cursor:pointer;" onclick="App.showToast('All notifications marked as read', 'info')">Mark read</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <div style="font-size:0.82rem; padding:0.6rem; background:var(--bg-surface); border-radius:var(--radius-sm); border-left:3px solid var(--emerald);">
+                <div style="font-weight:700; color:white;">Booking Confirmed</div>
+                <div style="color:var(--text-secondary);">Allianz Apex Arena Pitch 1 tomorrow at 8:00 PM.</div>
+              </div>
+              <div style="font-size:0.82rem; padding:0.6rem; background:var(--bg-surface); border-radius:var(--radius-sm); border-left:3px solid var(--cyan);">
+                <div style="font-weight:700; color:white;">Tournament Reminder</div>
+                <div style="color:var(--text-secondary);">Super 8 Cricket Cup registrations lock in 14 hours!</div>
+              </div>
+              <div style="font-size:0.82rem; padding:0.6rem; background:var(--bg-surface); border-radius:var(--radius-sm); border-left:3px solid var(--orange);">
+                <div style="font-weight:700; color:white;">Coach Message</div>
+                <div style="color:var(--text-secondary);">Coach Marcus shared your custom tactical drills plan.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auth Button -->
+        <button class="btn btn-sm btn-outline-emerald" data-open-auth="login">
+          Sign In
+        </button>
+
+        <!-- User Profile Switcher -->
+        <div class="user-profile-toggle" data-nav="profile">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="user-avatar-sm">
+          <span class="user-profile-name current-user-name">Zoya Khan</span>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button class="mobile-menu-btn" id="mobileMenuToggle">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileDrawer" style="display:none; background:var(--bg-secondary); border-bottom:1px solid var(--glass-border); padding:1.5rem;">
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      <a href="#home" class="nav-link" data-nav="home">Home</a>
+      <a href="#facilities" class="nav-link" data-nav="facilities">Facilities</a>
+      <a href="#tournaments" class="nav-link" data-nav="tournaments">Tournaments</a>
+      <a href="#coaches" class="nav-link" data-nav="coaches">Coaches</a>
+      <a href="#community" class="nav-link" data-nav="community">Community</a>
+      <a href="#about" class="nav-link" data-nav="about">About Us</a>
+      <a href="#profile" class="nav-link" data-nav="profile">My Profile</a>
+      <a href="#admin" class="nav-link" data-nav="admin">Admin Dashboard</a>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       VIEW 1: HOME PAGE
+       ========================================================================== -->
+  <section id="view-home" class="view-section active">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-backdrop-glow"></div>
+
+      <!-- Floating Sports Elements -->
+      <div class="floating-element float-ball-1">⚽</div>
+      <div class="floating-element float-ball-2">🏏</div>
+      <div class="floating-element float-ball-3">🏸</div>
+      <div class="floating-element float-ball-4">🏀</div>
+
+      <div class="container hero-content">
+        <div class="hero-pill-badge">
+          <span>⚡ AI-Powered Sports Ecosystem</span>
+          <span>•</span>
+          <span style="color:#FFF;">Next-Gen Booking & Community</span>
+        </div>
+
+        <h1 class="hero-title">
+          PLAY. <span class="highlight-line">CONNECT.</span> COMPETE.
+        </h1>
+
+        <p class="hero-subtitle">
+          Athletix is an AI-powered sports platform where athletes book premium facilities, compete in high-stakes tournaments, train with verified coaches, and build championship teams.
+        </p>
+
+        <div class="hero-cta-group">
+          <button class="btn btn-lg btn-primary" data-nav="facilities">
+            🏟️ Book Facility
+          </button>
+          <button class="btn btn-lg btn-secondary" data-nav="tournaments">
+            🏆 Explore Tournaments
+          </button>
+          <button class="btn btn-lg btn-glass" data-nav="coaches">
+            🎯 Find Coach
+          </button>
+        </div>
+
+        <!-- Quick Search Bar on Hero -->
+        <div class="hero-quick-search">
+          <div class="search-field">
+            <label>Sport Discipline</label>
+            <select id="heroSportSelect">
+              <option value="football">⚽ Football / Turf</option>
+              <option value="cricket">🏏 Box Cricket</option>
+              <option value="badminton">🏸 Badminton Court</option>
+              <option value="basketball">🏀 Basketball Hardwood</option>
+              <option value="tennis">🎾 Tennis Clay/Hard</option>
+              <option value="padel">🏓 Padel Court</option>
+            </select>
+          </div>
+
+          <div class="search-field">
+            <label>City / Location</label>
+            <input type="text" value="Mumbai, Maharashtra" placeholder="Enter neighborhood...">
+          </div>
+
+          <div class="search-field">
+            <label>Playing Date</label>
+            <input type="date" value="2026-08-15">
+          </div>
+
+          <button class="btn btn-primary" style="height:100%;" data-nav="facilities">
+            Search Turfs ⚡
+          </button>
+        </div>
+
+        <!-- Visual Sports Showcase -->
+        <div class="hero-visual-showcase" aria-label="Athletix sports showcase">
+          <div class="hero-visual-card hero-visual-main">
+            <img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=1200&q=85" alt="Football turf" loading="eager">
+            <div class="hero-visual-overlay">
+              <span class="badge badge-emerald">LIVE VENUE</span>
+              <strong>Premium Football Turf</strong>
+              <span>Book in seconds • AI team matching</span>
+            </div>
+          </div>
+          <div class="hero-visual-stack">
+            <div class="hero-visual-card">
+              <img src="https://images.unsplash.com/photo-1531415074868-036b107e775a?auto=format&fit=crop&w=700&q=85" alt="Cricket stadium" loading="lazy">
+              <div class="hero-mini-label">🏏 Box Cricket</div>
+            </div>
+            <div class="hero-visual-card">
+              <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=700&q=85" alt="Badminton court" loading="lazy">
+              <div class="hero-mini-label">🏸 BWF Badminton</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics Counter Banner -->
+    <div class="stats-banner">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number" id="counterFacilities">1200<span>+</span></div>
+            <div class="stat-label">Sports Facilities</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="counterPlayers">25K<span>+</span></div>
+            <div class="stat-label">Active Players</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="counterTournaments">850<span>+</span></div>
+            <div class="stat-label">Tournaments Hosted</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item-inner">
+              <div class="stat-number" id="counterCoaches">500<span>+</span></div>
+              <div class="stat-label">Verified Pro Coaches</div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4.9<span>★</span></div>
+            <div class="stat-label">User Community Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core Services Grid -->
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Ecosystem Features</span>
+        <h2 class="section-title">Everything An Athlete Needs In One Hub</h2>
+        <p class="section-desc">From instant automated turf bookings to AI squad balancing, Athletix powers your entire athletic lifestyle.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="glass-card service-card">
+          <div>
+            <div class="service-icon-box">🏟️</div>
+            <h3>Book Facilities</h3>
+            <p>Access 1,200+ verified synthetic turfs, indoor cricket boxes, BWF badminton courts, and hardwood basketball domes with live slot tracking.</p>
+          </div>
+          <a href="#facilities" class="service-link" data-nav="facilities">Explore Venues →</a>
+        </div>
+
+        <div class="glass-card service-card">
+          <div>
+            <div class="service-icon-box">🏆</div>
+            <h3>Join Tournaments</h3>
+            <p>Compete in prize-pool championships with real-time brackets, automated standings, live DRS scoreboards, and trophy honors.</p>
+          </div>
+          <a href="#tournaments" class="service-link" data-nav="tournaments">View Tournaments →</a>
+        </div>
+
+        <div class="glass-card service-card">
+          <div>
+            <div class="service-icon-box">🎯</div>
+            <h3>Certified Coaches</h3>
+            <p>Hire UEFA, BCCI, and ITF certified master coaches for 1-on-1 stroke refinement, video telemetry, and personalized drills.</p>
+          </div>
+          <a href="#coaches" class="service-link" data-nav="coaches">Find Mentors →</a>
+        </div>
+
+        <div class="glass-card service-card">
+          <div>
+            <div class="service-icon-box">👥</div>
+            <h3>Social Community</h3>
+            <p>Share match highlights, recruit substitute players for upcoming games, celebrate championship medals, and connect with athletes.</p>
+          </div>
+          <a href="#community" class="service-link" data-nav="community">Join the Feed →</a>
+        </div>
+
+        <div class="glass-card service-card">
+          <div>
+            <div class="service-icon-box">🧠</div>
+            <h3>AI Team Matching</h3>
+            <p>Our proprietary AI calculates skill compatibility, stamina balance, and player chemistry to generate optimal 5v5 & 7v7 squads.</p>
+          </div>
+          <a href="#home" class="service-link" onclick="document.querySelector('.ai-matchmaker-banner').scrollIntoView({behavior:'smooth'})">Try Matchmaker →</a>
+        </div>
+
+        <div class="glass-card service-card">
+          <div>
+            <div class="service-icon-box">📊</div>
+            <h3>Athlete Profile Hub</h3>
+            <p>Track your matches, win rates, MVP awards, digital QR tickets, and dynamic 5-axis performance radar charts.</p>
+          </div>
+          <a href="#profile" class="service-link" data-nav="profile">View Profile →</a>
+        </div>
+      </div>
+
+      <!-- AI Team Recommendation Simulator Banner -->
+      <div class="ai-matchmaker-banner">
+        <div class="ai-grid">
+          <div>
+            <div class="ai-chip-tag">⚡ ATHLETIX NEURAL ENGINE 3.0</div>
+            <h2 style="font-size:clamp(1.8rem, 3vw, 2.6rem); margin-bottom:1rem;">
+              AI Powered Team Recommendation
+            </h2>
+            <p style="color:#CBD5E1; line-height:1.7; margin-bottom:1.5rem;">
+              Never play short-handed again. Our neural algorithm analyzes player positioning, pace, stamina, and past chemistry to synthesize balanced, competitive teams in seconds.
+            </p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem;">
+              <div>
+                <label style="font-size:0.75rem; font-weight:700; color:var(--emerald-neon); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Select Sport</label>
+                <select id="aiSportSelect" style="width:100%; background:var(--bg-primary); border:1px solid var(--glass-border); padding:0.6rem; border-radius:var(--radius-sm); color:white;">
+                  <option value="football">Football 7v7</option>
+                  <option value="cricket">Box Cricket 8s</option>
+                  <option value="badminton">Badminton Doubles</option>
+                  <option value="basketball">Basketball 3x3</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:0.75rem; font-weight:700; color:var(--cyan); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Target Tier</label>
+                <select id="aiSkillSelect" style="width:100%; background:var(--bg-primary); border:1px solid var(--glass-border); padding:0.6rem; border-radius:var(--radius-sm); color:white;">
+                  <option value="intermediate">Competitive Tier 8-9</option>
+                  <option value="advanced">Semi-Pro Tier 10</option>
+                  <option value="casual">Casual / Friendly</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dynamic Compatibility Metrics -->
+            <div class="ai-metric-pills">
+              <div class="ai-metric-card">
+                <div class="ai-metric-val" id="aiMetricMatchScore">96%</div>
+                <div class="ai-metric-label">Skill Match</div>
+              </div>
+              <div class="ai-metric-card">
+                <div class="ai-metric-val" id="aiMetricBalanceScore" style="color:var(--cyan);">94%</div>
+                <div class="ai-metric-label">Role Balance</div>
+              </div>
+              <div class="ai-metric-card">
+                <div class="ai-metric-val" id="aiMetricChemScore" style="color:var(--gold);">92%</div>
+                <div class="ai-metric-label">Chemistry</div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:1rem;">
+              <button class="btn btn-primary" id="btnRefreshAISquad">
+                ⚡ Recalculate Squad
+              </button>
+              <button class="btn btn-secondary" id="btnInviteAISquad">
+                🚀 Invite Teammates
+              </button>
+            </div>
+          </div>
+
+          <!-- Right AI Squad Preview & Radar -->
+          <div class="ai-squad-preview">
+            <div class="ai-squad-header">
+              <span class="ai-squad-title">Recommended 5-Player Squad</span>
+              <span class="badge badge-emerald">Synergy 95%</span>
+            </div>
+
+            <!-- Radar Skill Chart -->
+            <div style="display:flex; justify-content:center; margin-bottom:1.2rem;">
+              <canvas id="aiRadarCanvas" width="220" height="190"></canvas>
+            </div>
+
+            <div class="squad-roster-list" id="aiSquadRosterList">
+              <!-- Dynamically rendered by ai-matchmaker.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonials Section -->
+      <div class="section-header">
+        <span class="section-tag">Athlete Testimonials</span>
+        <h2 class="section-title">Trusted By Over 25,000 Athletes</h2>
+        <p class="section-desc">Hear how players, coaches, and turf owners use Athletix every day.</p>
+      </div>
+
+      <div class="services-grid" style="margin-bottom:6rem;">
+        <div class="glass-card" style="padding:2rem;">
+          <div style="color:var(--gold); margin-bottom:1rem; font-size:1.2rem;">★★★★★</div>
+          <p style="font-size:0.92rem; line-height:1.7; margin-bottom:1.5rem; color:#E2E8F0;">
+            "Athletix transformed our weekend football games. We used to struggle finding turfs and extra players — now we book FIFA pitches and match with quality players in 3 clicks."
+          </p>
+          <div style="display:flex; align-items:center; gap:0.8rem;">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" style="width:42px; height:42px; border-radius:50%; object-fit:cover;">
+            <div>
+              <div style="font-weight:700; color:white; font-size:0.92rem;">Zoya Khan</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Striker • Bay Turf League</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card" style="padding:2rem;">
+          <div style="color:var(--gold); margin-bottom:1rem; font-size:1.2rem;">★★★★★</div>
+          <p style="font-size:0.92rem; line-height:1.7; margin-bottom:1.5rem; color:#E2E8F0;">
+            "As a certified coach, Athletix is my operating system. Athletes book my clinics directly, and the AI telemetry reports help me provide pinpoint stroke feedback."
+          </p>
+          <div style="display:flex; align-items:center; gap:0.8rem;">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" style="width:42px; height:42px; border-radius:50%; object-fit:cover;">
+            <div>
+              <div style="font-weight:700; color:white; font-size:0.92rem;">Coach Marcus Sterling</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">UEFA-A Pro Coach</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card" style="padding:2rem;">
+          <div style="color:var(--gold); margin-bottom:1rem; font-size:1.2rem;">★★★★★</div>
+          <p style="font-size:0.92rem; line-height:1.7; margin-bottom:1.5rem; color:#E2E8F0;">
+            "Organizing our regional 32-team tournament used to take weeks of manual scheduling. Athletix handled live brackets, prize payouts, and team registrations seamlessly."
+          </p>
+          <div style="display:flex; align-items:center; gap:0.8rem;">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" style="width:42px; height:42px; border-radius:50%; object-fit:cover;">
+            <div>
+              <div style="font-weight:700; color:white; font-size:0.92rem;">Rohit Sharma-Gupta</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Tournament Director</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VIEW 2: FACILITIES PAGE
+       ========================================================================== -->
+  <section id="view-facilities" class="view-section">
+    <div class="container" style="padding-top:3rem;">
+      <div class="section-header" style="text-align:left; margin-bottom:2rem;">
+        <span class="section-tag">Search & Book</span>
+        <h1 class="section-title">Find & Book Sports Facilities</h1>
+        <p class="section-desc">Discover FIFA-certified turfs, indoor cricket boxes, and Olympic badminton courts with instant confirmation.</p>
+      </div>
+
+      <div class="facilities-layout">
+        <!-- Filters Sidebar -->
+        <aside class="filter-sidebar">
+          <div class="filter-title-main">
+            <span>Filters</span>
+            <button class="filter-reset-btn" onclick="document.querySelectorAll('.facility-amenity-filter').forEach(c => c.checked=false); App.renderFacilities();">Reset All</button>
+          </div>
+
+          <!-- Sport Category Chips -->
+          <div class="filter-group">
+            <div class="filter-group-title">Sport Discipline</div>
+            <div class="sport-category-chips">
+              <button class="chip-btn facility-sport-chip active" data-sport="all">All Sports</button>
+              <button class="chip-btn facility-sport-chip" data-sport="football">⚽ Football</button>
+              <button class="chip-btn facility-sport-chip" data-sport="cricket">🏏 Cricket</button>
+              <button class="chip-btn facility-sport-chip" data-sport="badminton">🏸 Badminton</button>
+              <button class="chip-btn facility-sport-chip" data-sport="basketball">🏀 Basketball</button>
+              <button class="chip-btn facility-sport-chip" data-sport="tennis">🎾 Tennis</button>
+              <button class="chip-btn facility-sport-chip" data-sport="padel">🏓 Padel</button>
+            </div>
+          </div>
+
+          <!-- Price Range Slider -->
+          <div class="filter-group">
+            <div class="filter-group-title">Max Price / Hour</div>
+            <div class="range-slider-wrapper">
+              <input type="range" min="20" max="60" value="60" class="range-slider" id="facilityPriceSlider">
+              <div class="range-values">
+                <span>₹20/hr</span>
+                <span id="facilityPriceSliderVal" style="color:var(--emerald-neon); font-weight:700;">₹60</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amenities Checkboxes -->
+          <div class="filter-group">
+            <div class="filter-group-title">Court Amenities</div>
+            <div class="amenity-checkbox-list">
+              <label class="checkbox-label">
+                <input type="checkbox" value="Flood Lights" class="facility-amenity-filter">
+                <span>Flood Lights (Night Play)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" value="Indoor/Outdoor" class="facility-amenity-filter">
+                <span>Indoor Air-Conditioned</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" value="Parking" class="facility-amenity-filter">
+                <span>Dedicated Parking</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" value="Changing Room" class="facility-amenity-filter">
+                <span>Changing Room & Showers</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" value="Equipment Rental" class="facility-amenity-filter">
+                <span>Equipment Rental (Balls/Rackets)</span>
+              </label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Facilities Cards Grid -->
+        <main>
+          <div class="facilities-grid" id="facilitiesGrid">
+            <!-- Dynamically rendered by App.renderFacilities() -->
+          </div>
+        </main>
+      </div>
+
+      <!-- Sports Images Gallery Section -->
+      <div style="margin-top:4rem; padding-top:3rem; border-top:1px solid var(--glass-border);">
+        <div class="section-header" style="text-align:left; margin-bottom:2rem;">
+          <h2 class="section-title">Sports Facility Gallery</h2>
+          <p class="section-desc">Browse facilities in action across all sports disciplines.</p>
+        </div>
+
+        <!-- Gallery Sport Filter Chips -->
+        <div class="filter-group" style="margin-bottom:2rem;">
+          <div class="filter-group-title">Filter by Sport</div>
+          <div class="sport-category-chips">
+            <button class="chip-btn gallery-sport-chip active" data-gallery-sport="all">All Sports</button>
+            <button class="chip-btn gallery-sport-chip" data-gallery-sport="football">⚽ Football</button>
+            <button class="chip-btn gallery-sport-chip" data-gallery-sport="cricket">🏏 Cricket</button>
+            <button class="chip-btn gallery-sport-chip" data-gallery-sport="badminton">🏸 Badminton</button>
+            <button class="chip-btn gallery-sport-chip" data-gallery-sport="basketball">🏀 Basketball</button>
+            <button class="chip-btn gallery-sport-chip" data-gallery-sport="tennis">🎾 Tennis</button>
+            <button class="chip-btn gallery-sport-chip" data-gallery-sport="padel">🏓 Padel</button>
+          </div>
+        </div>
+
+        <!-- Gallery Images Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- Dynamically rendered by App.renderGallery() -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VIEW 3: TOURNAMENT PAGE
+       ========================================================================== -->
+  <section id="view-tournaments" class="view-section">
+    <div class="container" style="padding-top:3rem;">
+      <div class="section-header">
+        <span class="section-tag">Elite Competition</span>
+        <h1 class="section-title">Compete. Win. Rise.</h1>
+        <p class="section-desc">Join sanctioned regional tournaments, showcase your skills on live streams, and take home championship prize pools.</p>
+      </div>
+
+      <!-- Tournament Stats Bar -->
+      <div class="stats-grid" style="background:var(--bg-secondary); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:1.8rem; margin-bottom:3rem;">
+        <div class="stat-item">
+          <div class="stat-number" style="color:var(--gold);">₹250K<span>+</span></div>
+          <div class="stat-label">Annual Prize Pools</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">120<span>+</span></div>
+          <div class="stat-label">Active Championships</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">8.5K<span>+</span></div>
+          <div class="stat-label">Teams Competing</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" style="color:var(--cyan);">8</div>
+          <div class="stat-label">Major Sports</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100<span>%</span></div>
+          <div class="stat-label">Verified Referees</div>
+        </div>
+      </div>
+
+      <div class="tournaments-header-tabs">
+        <button class="tab-btn tournament-tab-btn active" data-tab="all">All Tournaments</button>
+        <button class="tab-btn tournament-tab-btn" data-tab="live">🔴 Live Now</button>
+        <button class="tab-btn tournament-tab-btn" data-tab="upcoming">Upcoming</button>
+        <button class="tab-btn tournament-tab-btn" data-tab="completed">Completed</button>
+      </div>
+
+      <!-- Tournament Cards Grid -->
+      <div class="tournament-cards-grid" id="tournamentsGrid">
+        <!-- Dynamically rendered by tournament.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VIEW 4: COACHES PAGE
+       ========================================================================== -->
+  <section id="view-coaches" class="view-section">
+    <div class="container" style="padding-top:3rem;">
+      <div class="section-header">
+        <span class="section-tag">Elite Mentorship</span>
+        <h1 class="section-title">Find the Right Pro Coach</h1>
+        <p class="section-desc">Train 1-on-1 with UEFA, BCCI, and BWF certified mentors with video telemetry and personalized drills.</p>
+      </div>
+
+      <!-- Coach Category Chips -->
+      <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:3rem;">
+        <button class="chip-btn coach-sport-chip active" data-sport="all">All Coaches</button>
+        <button class="chip-btn coach-sport-chip" data-sport="football">⚽ Football</button>
+        <button class="chip-btn coach-sport-chip" data-sport="cricket">🏏 Cricket</button>
+        <button class="chip-btn coach-sport-chip" data-sport="badminton">🏸 Badminton</button>
+        <button class="chip-btn coach-sport-chip" data-sport="tennis">🎾 Tennis</button>
+        <button class="chip-btn coach-sport-chip" data-sport="basketball">🏀 Basketball</button>
+        <button class="chip-btn coach-sport-chip" data-sport="swimming">🏊 Swimming</button>
+      </div>
+
+      <!-- Coaches Grid -->
+      <div class="coaches-grid" id="coachesGrid">
+        <!-- Dynamically rendered by App.renderCoaches() -->
+      </div>
+
+      <!-- Become a Coach CTA Card -->
+      <div class="glass-card" style="padding:3rem; text-align:center; margin-bottom:5rem; background:linear-gradient(135deg, #111827 0%, #161F30 100%); border:1px solid rgba(0,200,83,0.3);">
+        <h2 style="font-size:2rem; margin-bottom:1rem;">Are You A Certified Sports Coach?</h2>
+        <p style="max-width:600px; margin:0 auto 1.8rem; color:#CBD5E1;">
+          Join the Athletix Coaching Network. Monetize your expertise, get booked by local athletes, and use our AI telemetry tools to track student progress.
+        </p>
+        <button class="btn btn-primary btn-lg" onclick="App.showToast('🚀 Coach Application Portal Opened!', 'success')">
+          Apply To Become A Coach
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VIEW 5: COMMUNITY PAGE
+       ========================================================================== -->
+  <section id="view-community" class="view-section">
+    <div class="container" style="padding-top:3rem;">
+      <div class="section-header">
+        <span class="section-tag">Athletic Social Network</span>
+        <h1 class="section-title">Stronger Together. Better Forever.</h1>
+        <p class="section-desc">Connect with local athletes, recruit teammates for upcoming turf matches, and share drills.</p>
+      </div>
+
+      <div class="community-layout">
+        <!-- Left Sidebar Navigation -->
+        <aside class="community-left-nav">
+          <ul class="comm-nav-list">
+            <li class="comm-nav-item active"><span>📰</span> Live Feed</li>
+            <li class="comm-nav-item" onclick="App.showToast('My Teams feature loaded', 'info')"><span>👥</span> My Squads</li>
+            <li class="comm-nav-item" onclick="App.showToast('Clubs & Groups list loaded', 'info')"><span>🛡️</span> Sports Clubs</li>
+            <li class="comm-nav-item" onclick="App.showToast('Global Leaderboard opened', 'info')"><span>🏅</span> Leaderboards</li>
+            <li class="comm-nav-item" onclick="App.showToast('Saved posts loaded', 'info')"><span>🔖</span> Saved Drills</li>
+          </ul>
+        </aside>
+
+        <!-- Center Community Feed -->
+        <main>
+          <!-- Create Post Card -->
+          <div class="create-post-card">
+            <div class="create-post-top">
+              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="User" style="width:42px; height:42px; border-radius:50%; object-fit:cover;">
+              <textarea class="post-textarea" id="newPostTextarea" placeholder="Looking for teammates, sharing a match victory, or posting training drills?"></textarea>
+            </div>
+            <div class="create-post-actions">
+              <div class="post-action-tools">
+                <select id="newPostSportSelect" style="background:var(--bg-surface); border:1px solid var(--glass-border); border-radius:var(--radius-sm); padding:0.4rem 0.8rem; font-size:0.8rem; color:white;">
+                  <option value="football">⚽ Football</option>
+                  <option value="cricket">🏏 Box Cricket</option>
+                  <option value="badminton">🏸 Badminton</option>
+                  <option value="basketball">🏀 Basketball</option>
+                </select>
+                <button class="btn btn-sm btn-secondary" onclick="App.showToast('📷 Photo attachment simulated', 'info')">📷 Photo</button>
+                <button class="btn btn-sm btn-secondary" onclick="App.showToast('🏆 Match score attached', 'info')">🏆 Score</button>
+              </div>
+              <button class="btn btn-primary btn-sm" id="btnPublishPost">
+                Publish Post 🚀
+              </button>
+            </div>
+          </div>
+
+          <!-- Feed Posts List -->
+          <div id="communityFeedList">
+            <!-- Dynamically rendered by community.js -->
+          </div>
+        </main>
+
+        <!-- Right Community Sidebar -->
+        <aside class="community-right-sidebar">
+          <!-- Suggested Players -->
+          <div class="glass-card" style="padding:1.5rem; margin-bottom:1.5rem;">
+            <div style="font-weight:700; color:white; font-size:0.95rem; margin-bottom:0.8rem;">
+              Suggested Players
+            </div>
+            <div id="suggestedPlayersContainer">
+              <!-- Rendered by community.js -->
+            </div>
+          </div>
+
+          <!-- Trending Sports Topics -->
+          <div class="glass-card" style="padding:1.5rem;">
+            <div style="font-weight:700; color:white; font-size:0.95rem; margin-bottom:0.8rem;">
+              Trending Topics
+            </div>
+            <div id="trendingTopicsContainer">
+              <!-- Rendered by community.js -->
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VIEW 6: ABOUT US PAGE
+       ========================================================================== -->
+  <section id="view-about" class="view-section">
+    <div class="container" style="padding-top:3rem;">
+      <div class="section-header">
+        <span class="section-tag">Our Story & Mission</span>
+        <h1 class="section-title">About ATHLETIX</h1>
+        <p class="section-desc">Pioneering the next era of sports technology, connecting athletes, facilities, and coaches worldwide.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; margin-bottom:5rem;">
+        <div>
+          <h2 style="font-size:2rem; margin-bottom:1rem;">Our Mission & Vision</h2>
+          <p style="margin-bottom:1.2rem; line-height:1.7;">
+            ATHLETIX was founded with a singular ambition: eliminate every barrier standing between an athlete and the game they love. From fragmented turf booking processes to unmatched skill gaps, we build intelligent technology that brings athletes together.
+          </p>
+          <p style="margin-bottom:1.8rem; line-height:1.7;">
+            Through our AI-driven squad recommendation engine, real-time tournament infrastructure, and verified coach marketplace, we're building the operating system for modern sports communities.
+          </p>
+          <div style="display:flex; gap:1rem;">
+            <button class="btn btn-primary" data-nav="facilities">Book Turf Now</button>
+            <button class="btn btn-secondary" data-open-auth="signup">Join Community</button>
+          </div>
+        </div>
+        <div class="glass-card" style="overflow:hidden; height:360px; border-radius:var(--radius-xl);">
+          <img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=1000&q=80" alt="Athletes" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- Why Choose Athletix Grid -->
+      <div class="section-header">
+        <span class="section-tag">Why Athletes Choose Us</span>
+        <h2 class="section-title">Startup-Grade Excellence</h2>
+      </div>
+
+      <div class="services-grid" style="margin-bottom:6rem;">
+        <div class="glass-card" style="padding:2rem;">
+          <div style="font-size:2rem; margin-bottom:1rem;">🧠</div>
+          <h3>AI Powered Matching</h3>
+          <p>Proprietary algorithms match player stamina, skill levels, and preferred roles to eliminate one-sided games.</p>
+        </div>
+        <div class="glass-card" style="padding:2rem;">
+          <div style="font-size:2rem; margin-bottom:1rem;">🔒</div>
+          <h3>Guaranteed Slot Lock</h3>
+          <p>Direct API synchronization with sports venues ensures 100% booking confirmation with instant QR tickets.</p>
+        </div>
+        <div class="glass-card" style="padding:2rem;">
+          <div style="font-size:2rem; margin-bottom:1rem;">🏅</div>
+          <h3>Verified Credentials</h3>
+          <p>Every coach and tournament referee undergoes rigorous background checks and licensing verification.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VIEW 7: PLAYER PROFILE PAGE
+       ========================================================================== -->
+  <section id="view-profile" class="view-section">
+    <div class="container" style="padding-top:2rem;">
+      <!-- Cover and Avatar -->
+      <div class="profile-cover-box">
+        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80" alt="Cover" class="profile-cover-img">
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80" alt="Avatar" class="profile-avatar-floating">
+      </div>
+
+      <div class="profile-meta-header">
+        <div class="profile-name-tier">
+          <h1 id="profileUserName">Zoya Khan</h1>
+          <div style="display:flex; align-items:center; gap:0.6rem;">
+            <span class="badge badge-emerald" id="profileUserRole">Diamond Athlete • Level 9</span>
+            <span style="font-size:0.85rem; color:var(--text-muted);" id="profileUserCity">Mumbai, Maharashtra</span>
+          </div>
+          <p style="margin-top:0.8rem; max-width:600px; font-size:0.92rem;" id="profileUserBio">
+            Competitive striker & box cricket all-rounder. 2x MVP in Bay Turf Series.
+          </p>
+        </div>
+        <button class="btn btn-secondary" id="btnEditProfileModal">
+          ✏️ Edit Profile
+        </button>
+      </div>
+
+      <!-- Player Statistics Grid -->
+      <div class="profile-stats-grid">
+        <div class="profile-stat-card">
+          <div class="profile-stat-val" id="profileStatMatches">148</div>
+          <div style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Matches Played</div>
+        </div>
+        <div class="profile-stat-card">
+          <div class="profile-stat-val" id="profileStatWins" style="color:var(--cyan);">112</div>
+          <div style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Wins</div>
+        </div>
+        <div class="profile-stat-card">
+          <div class="profile-stat-val" id="profileStatWinRate" style="color:var(--gold);">75.6%</div>
+          <div style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Win Rate</div>
+        </div>
+        <div class="profile-stat-card">
+          <div class="profile-stat-val" id="profileStatMvp" style="color:var(--orange);">29</div>
+          <div style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">MVP Awards</div>
+        </div>
+      </div>
+
+      <!-- Radar and Matches Split -->
+      <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:2rem; margin-bottom:4rem;">
+        <!-- Left: Upcoming Bookings & Match History -->
+        <div>
+          <h3 style="font-size:1.3rem; margin-bottom:1rem;">Upcoming Booked Matches</h3>
+          <div id="profileUpcomingBookingsList">
+            <!-- Rendered by profile.js -->
+          </div>
+
+          <h3 style="font-size:1.3rem; margin:2rem 0 1rem;">Recent Match History</h3>
+          <div id="profileMatchHistoryList" class="glass-card" style="padding:1.5rem;">
+            <!-- Rendered by profile.js -->
+          </div>
+        </div>
+
+        <!-- Right: Performance Radar & Badges -->
+        <div>
+          <div class="glass-card" style="padding:2rem; margin-bottom:2rem; text-align:center;">
+            <h3 style="font-size:1.2rem; margin-bottom:1rem;">5-Axis Skill Attributes</h3>
+            <canvas id="profileRadarCanvas" width="260" height="220"></canvas>
+          </div>
+
+          <div class="glass-card" style="padding:1.5rem;">
+            <h3 style="font-size:1.2rem; margin-bottom:1rem;">Achievements & Badges</h3>
+            <div id="profileBadgesList" style="display:grid; grid-template-columns:1fr; gap:0.75rem;">
+              <!-- Rendered by profile.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VIEW 8: ADMIN OPERATIONS DASHBOARD
+       ========================================================================== -->
+  <section id="view-admin" class="view-section">
+    <div class="container" style="padding-top:2rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem;">
+        <div>
+          <span class="badge badge-cyan" style="margin-bottom:0.4rem;">Platform Operations</span>
+          <h1 style="font-size:2.2rem;">Executive Analytics Dashboard</h1>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="App.showToast('📊 Exported monthly revenue report to CSV', 'success')">
+          📥 Export Reports
+        </button>
+      </div>
+
+      <!-- KPI Stat Cards -->
+      <div class="admin-kpi-grid">
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-title">Total Revenue</div>
+          <div class="admin-kpi-value" id="adminKpiRevenue">₹148,250</div>
+          <div class="admin-kpi-change">↑ 24.8% vs last month</div>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-title">Active Bookings</div>
+          <div class="admin-kpi-value" id="adminKpiBookings" style="color:var(--cyan);">1,842</div>
+          <div class="admin-kpi-change">↑ 18.2% this week</div>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-title">Registered Players</div>
+          <div class="admin-kpi-value" id="adminKpiPlayers" style="color:var(--gold);">25,430</div>
+          <div class="admin-kpi-change">↑ 1,240 new athletes</div>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-title">Verified Coaches</div>
+          <div class="admin-kpi-value" id="adminKpiCoaches" style="color:var(--emerald-neon);">512</div>
+          <div class="admin-kpi-change">↑ 45 verified</div>
+        </div>
+      </div>
+
+      <!-- Analytics Charts Grid -->
+      <div class="admin-charts-grid">
+        <!-- Revenue Growth Chart -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 style="font-size:1.15rem;">Monthly Revenue & Booking Trends</h3>
+              <div style="font-size:0.8rem; color:var(--text-muted);">Real-time growth across all facility bookings</div>
+            </div>
+            <span class="badge badge-emerald">2026 Year-To-Date</span>
+          </div>
+          <div class="chart-canvas-box">
+            <canvas id="adminRevenueCanvas" width="600" height="240"></canvas>
+          </div>
+        </div>
+
+        <!-- Sport Popularity Donut Chart -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 style="font-size:1.15rem;">Sport Share</h3>
+              <div style="font-size:0.8rem; color:var(--text-muted);">Turf vs Court volume</div>
+            </div>
+          </div>
+          <div class="chart-canvas-box" style="display:flex; align-items:center; justify-content:center;">
+            <canvas id="adminSportsDonutCanvas" width="220" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-Time Bookings Management Table -->
+      <div class="data-table-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+          <h3 style="font-size:1.2rem;">Recent Platform Transactions</h3>
+          <input type="text" id="adminTableSearch" placeholder="Search player, facility, or sport..." style="background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.5rem 1rem; border-radius:var(--radius-md); font-size:0.85rem; color:white; width:280px;">
+        </div>
+
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Txn ID</th>
+              <th>Athlete</th>
+              <th>Facility / Arena</th>
+              <th>Discipline</th>
+              <th>Amount</th>
+              <th>Time Slot</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminBookingsTableBody">
+            <!-- Rendered by admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MODALS & DIALOGS
+       ========================================================================== -->
+
+  <!-- 1. Facility Booking Modal -->
+  <div class="modal-backdrop" id="facilityBookingModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="bookingFacilityName" style="font-size:1.3rem;">Facility Name</h3>
+          <div style="font-size:0.85rem; color:var(--text-muted);" id="bookingFacilityLocation">Location</div>
+        </div>
+        <button class="modal-close-btn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem;">
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:var(--emerald-neon); display:block; margin-bottom:0.3rem;">Select Court Type</label>
+            <select id="bookingCourtSelect" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+              <!-- Options populated dynamically -->
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:var(--cyan); display:block; margin-bottom:0.3rem;">Booking Date</label>
+            <input type="date" id="bookingDateInput" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+          </div>
+        </div>
+
+        <label style="font-size:0.75rem; font-weight:700; color:var(--text-white); display:block; margin-bottom:0.5rem;">Select Time Slot</label>
+        <div class="slot-matrix-grid" id="slotMatrixContainer">
+          <!-- Populated by booking.js -->
+        </div>
+
+        <!-- Add-on options -->
+        <div style="background:var(--bg-surface); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1rem; margin:1.5rem 0;">
+          <div style="font-size:0.85rem; font-weight:700; color:white; margin-bottom:0.6rem;">Match Add-ons</div>
+          <div style="display:flex; flex-direction:column; gap:0.5rem;">
+            <label class="checkbox-label">
+              <input type="checkbox" value="10" class="booking-addon-checkbox">
+              <span>Pro Match Balls & Bibs Set (+₹10)</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" value="25" class="booking-addon-checkbox">
+              <span>Certified Match Referee (+₹25)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div style="display:flex; justify-content:space-between; font-size:0.9rem; padding:0.4rem 0; border-bottom:1px solid var(--glass-border);">
+          <span>Court Base Price:</span>
+          <span id="summaryBasePrice">₹45.00</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.9rem; padding:0.4rem 0; border-bottom:1px solid var(--glass-border);">
+          <span>Add-ons Total:</span>
+          <span id="summaryAddonsPrice">₹0.00</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.9rem; padding:0.4rem 0; border-bottom:1px solid var(--glass-border);">
+          <span>Platform Taxes (8%):</span>
+          <span id="summaryTaxPrice">₹3.60</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:800; color:var(--emerald-neon); padding-top:0.8rem;">
+          <span>Grand Total:</span>
+          <span id="summaryTotalPrice">₹48.60</span>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-close-btn-inline" onclick="document.getElementById('facilityBookingModal').classList.remove('active');">Cancel</button>
+        <button class="btn btn-primary" id="btnConfirmFacilityBooking">Proceed & Pay ⚡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Digital Match Ticket Modal -->
+  <div class="modal-backdrop" id="bookingTicketModal">
+    <div class="modal-dialog" style="max-width:480px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.2rem;">Digital Match Pass</h3>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body" style="text-align:center;">
+        <div class="ticket-receipt">
+          <span class="badge badge-emerald" style="margin-bottom:1rem;">Verified Booking</span>
+          <h2 id="ticketFacilityName" style="font-size:1.4rem; margin-bottom:0.3rem;">Allianz Arena</h2>
+          <div id="ticketCourtType" style="color:var(--emerald-neon); font-weight:600; font-size:0.9rem;">7v7 AstroTurf</div>
+          <div id="ticketSlotTime" style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem;">08:00 PM - 09:00 PM</div>
+
+          <div class="ticket-qr-box">
+            <!-- Simulated High-Precision QR Code SVG -->
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+              <rect width="100" height="100" fill="#FFFFFF"/>
+              <rect x="10" y="10" width="25" height="25" fill="#0B0F19"/>
+              <rect x="15" y="15" width="15" height="15" fill="#FFFFFF"/>
+              <rect x="18" y="18" width="9" height="9" fill="#00C853"/>
+
+              <rect x="65" y="10" width="25" height="25" fill="#0B0F19"/>
+              <rect x="70" y="15" width="15" height="15" fill="#FFFFFF"/>
+              <rect x="73" y="18" width="9" height="9" fill="#00C853"/>
+
+              <rect x="10" y="65" width="25" height="25" fill="#0B0F19"/>
+              <rect x="15" y="70" width="15" height="15" fill="#FFFFFF"/>
+              <rect x="18" y="73" width="9" height="9" fill="#00C853"/>
+
+              <rect x="42" y="15" width="6" height="20" fill="#0B0F19"/>
+              <rect x="42" y="45" width="16" height="16" fill="#0B0F19"/>
+              <rect x="65" y="65" width="25" height="6" fill="#0B0F19"/>
+              <rect x="75" y="75" width="15" height="15" fill="#00C853"/>
+            </svg>
+          </div>
+
+          <div style="font-family:'Courier New', monospace; font-size:0.9rem; color:var(--text-secondary);" id="ticketIdCode">
+            ATH-8849-FIFA-APEX
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" style="width:100%;" onclick="document.getElementById('bookingTicketModal').classList.remove('active'); App.showToast('📱 Ticket saved to your phone passbook!', 'success')">
+          Save To Apple / Google Wallet
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Tournament Registration Modal -->
+  <div class="modal-backdrop" id="tournamentRegisterModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="tourRegTitle" style="font-size:1.3rem;">Tournament Registration</h3>
+          <div style="font-size:0.85rem; color:var(--gold);" id="tourRegFee">Entry Fee: ₹180</div>
+        </div>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:var(--emerald-neon); display:block; margin-bottom:0.3rem;">Team Name</label>
+            <input type="text" id="regTeamName" placeholder="e.g. Viper FC" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div>
+              <label style="font-size:0.75rem; font-weight:700; color:var(--cyan); display:block; margin-bottom:0.3rem;">Captain Name</label>
+              <input type="text" value="Zoya Khan" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+            </div>
+            <div>
+              <label style="font-size:0.75rem; font-weight:700; color:var(--cyan); display:block; margin-bottom:0.3rem;">Captain Phone</label>
+              <input type="text" value="+1 (555) 482-9012" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+            </div>
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:var(--text-white); display:block; margin-bottom:0.3rem;">Jersey Primary Color</label>
+            <input type="text" placeholder="e.g. Neon Green / Black" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="document.getElementById('tournamentRegisterModal').classList.remove('active');">Cancel</button>
+        <button class="btn btn-primary" id="btnSubmitTournamentReg">Confirm Registration 🏆</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Tournament Details Modal -->
+  <div class="modal-backdrop" id="tournamentDetailsModal">
+    <div class="modal-dialog" style="max-width:850px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="tourDetailsTitle" style="font-size:1.3rem;">Tournament Details</h3>
+          <div style="font-size:0.85rem; color:var(--text-muted);" id="tourDetailsVenue">Venue</div>
+        </div>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin-bottom:1.5rem;">
+          <div style="background:var(--bg-surface); padding:0.8rem; border-radius:var(--radius-sm);">
+            <div style="font-size:0.75rem; color:var(--text-muted);">Prize Pool</div>
+            <div style="font-size:1.2rem; font-weight:800; color:var(--gold);" id="tourDetailsPrize">₹15,000</div>
+          </div>
+          <div style="background:var(--bg-surface); padding:0.8rem; border-radius:var(--radius-sm);">
+            <div style="font-size:0.75rem; color:var(--text-muted);">Format</div>
+            <div style="font-size:1rem; font-weight:700; color:white;" id="tourDetailsFormat">7v7 Knockout</div>
+          </div>
+          <div style="background:var(--bg-surface); padding:0.8rem; border-radius:var(--radius-sm);">
+            <div style="font-size:0.75rem; color:var(--text-muted);">Organizer</div>
+            <div style="font-size:1rem; font-weight:700; color:var(--cyan);" id="tourDetailsOrganizer">Athletix Elite</div>
+          </div>
+        </div>
+
+        <h4 style="font-size:1.1rem; margin-bottom:0.8rem;">Live Tournament Bracket Tree</h4>
+        <div id="tourBracketTree">
+          <!-- Populated by tournament.js -->
+        </div>
+
+        <h4 style="font-size:1.1rem; margin:1.5rem 0 0.5rem;">Tournament Rules & Conduct</h4>
+        <p style="font-size:0.88rem; color:var(--text-secondary);" id="tourDetailsRules"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Coach Booking Modal -->
+  <div class="modal-backdrop" id="coachBookingModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:0.8rem;">
+          <img src="" id="coachModalAvatar" style="width:44px; height:44px; border-radius:50%; object-fit:cover;">
+          <div>
+            <h3 id="coachModalName" style="font-size:1.2rem;">Coach</h3>
+            <div style="font-size:0.8rem; color:var(--emerald-neon);" id="coachModalTitle">License</div>
+          </div>
+        </div>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:1.2rem;">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-white); display:block; margin-bottom:0.3rem;">Training Clinic Program</label>
+          <select id="coachProgramSelect" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+            <!-- Options populated dynamically -->
+          </select>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:var(--cyan); display:block; margin-bottom:0.3rem;">Preferred Date</label>
+            <input type="date" value="2026-08-16" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:var(--cyan); display:block; margin-bottom:0.3rem;">Preferred Slot</label>
+            <select style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+              <option>06:00 PM - 07:00 PM</option>
+              <option>07:00 PM - 08:00 PM</option>
+              <option>08:00 AM - 09:00 AM</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-white); display:block; margin-bottom:0.3rem;">Training Focus & Specific Goals</label>
+          <textarea placeholder="e.g. Want to increase shooting accuracy under pressure and refine 1v1 separation." style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); border-radius:var(--radius-sm); padding:0.65rem; color:white; resize:none; min-height:70px;"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div style="margin-right:auto; font-weight:800; color:var(--emerald-neon);" id="coachModalPrice">₹65/hr</div>
+        <button class="btn btn-primary" id="btnConfirmCoachBooking">Request Session 🎯</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Facility Details Modal -->
+  <div class="modal-backdrop" id="facilityDetailsModal">
+    <div class="modal-dialog" style="max-width:780px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="facDetailsTitle" style="font-size:1.3rem;">Facility Details</h3>
+          <div style="font-size:0.85rem; color:var(--text-muted);" id="facDetailsLocation">Location</div>
+        </div>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="height:220px; border-radius:var(--radius-md); overflow:hidden; margin-bottom:1.5rem;">
+          <img src="" id="facDetailsBanner" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <h4 style="font-size:1.1rem; margin-bottom:0.5rem;">Overview</h4>
+        <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.6; margin-bottom:1.5rem;" id="facDetailsOverview"></p>
+
+        <h4 style="font-size:1.1rem; margin-bottom:0.6rem;">Available Amenities</h4>
+        <div id="facDetailsAmenitiesList" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.6rem; margin-bottom:1.5rem;">
+          <!-- Amenities -->
+        </div>
+
+        <h4 style="font-size:1.1rem; margin-bottom:0.5rem;">Venue Rules & Guidelines</h4>
+        <ul id="facDetailsRulesList" style="color:var(--text-secondary); font-size:0.88rem; padding-left:1.2rem; line-height:1.6;">
+          <!-- Rules -->
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <div style="margin-right:auto; font-size:1.2rem; font-weight:800; color:white;" id="facDetailsPrice">₹45/hr</div>
+        <button class="btn btn-primary" id="facDetailsBookActionBtn">Book This Venue ⚡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Coach Profile Modal -->
+  <div class="modal-backdrop" id="coachProfileModal">
+    <div class="modal-dialog" style="max-width:780px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="coachProfileName" style="font-size:1.3rem;">Coach</h3>
+          <div style="font-size:0.85rem; color:var(--emerald-neon);" id="coachProfileTitle">Title</div>
+        </div>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="height:180px; position:relative; border-radius:var(--radius-md); overflow:hidden; margin-bottom:3.5rem;">
+          <img src="" id="coachProfileCover" style="width:100%; height:100%; object-fit:cover;">
+          <img src="" id="coachProfileAvatar" style="width:80px; height:80px; border-radius:50%; border:3px solid var(--emerald); position:absolute; bottom:-35px; left:1.5rem; object-fit:cover;">
+        </div>
+
+        <h4 style="font-size:1.1rem; margin-bottom:0.5rem;">Coaching Philosophy & Bio</h4>
+        <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.6; margin-bottom:1.5rem;" id="coachProfileBio"></p>
+
+        <h4 style="font-size:1.1rem; margin-bottom:0.6rem;">Specializations</h4>
+        <div id="coachSpecialtiesList" style="display:flex; gap:0.5rem; margin-bottom:1.5rem;">
+          <!-- Tags -->
+        </div>
+
+        <h4 style="font-size:1.1rem; margin-bottom:0.6rem;">Key Career Achievements</h4>
+        <ul id="coachAchievementsList" style="color:var(--text-secondary); font-size:0.88rem; list-style:none; line-height:1.8;">
+          <!-- Achievements -->
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <div style="margin-right:auto; font-size:1.2rem; font-weight:800; color:white;" id="coachProfileRate">₹65/hr</div>
+        <button class="btn btn-primary" id="coachProfileBookActionBtn">Book 1-on-1 Session 🎯</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Edit Profile Modal -->
+  <div class="modal-backdrop" id="editProfileModal">
+    <div class="modal-dialog" style="max-width:560px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.2rem;">Edit Player Profile</h3>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:var(--emerald-neon); display:block; margin-bottom:0.3rem;">Bio & Playing Style</label>
+            <textarea id="editBioInput" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white; min-height:80px;"></textarea>
+          </div>
+          <div>
+            <label style="font-size:0.75rem; font-weight:700; color:var(--cyan); display:block; margin-bottom:0.3rem;">Location / City</label>
+            <input type="text" id="editCityInput" style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.65rem; border-radius:var(--radius-sm); color:white;">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="document.getElementById('editProfileModal').classList.remove('active');">Cancel</button>
+        <button class="btn btn-primary" id="btnSaveProfileChanges">Save Changes ✅</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Universal Quick Search Modal (Ctrl+K) -->
+  <div class="modal-backdrop" id="universalSearchModal">
+    <div class="modal-dialog" style="max-width:640px;">
+      <div class="modal-header">
+        <input type="text" id="universalSearchInput" placeholder="Search facilities, tournaments, coaches, posts..." style="width:100%; font-size:1.1rem; color:white;">
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body" style="max-height:400px; overflow-y:auto;" id="universalSearchResults">
+        <div style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.9rem;">
+          Type at least 2 characters to search across turfs, tournaments, coaches, and posts...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Split-Screen Authentication & Multi-Step Registration Modal -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal-dialog" style="max-width:820px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr 1.3fr; min-height:520px;">
+        <!-- Left Hero Visual -->
+        <div style="background:linear-gradient(135deg, #05140A 0%, #111827 100%); padding:2.5rem; display:flex; flex-direction:column; justify-content:space-between; border-right:1px solid var(--glass-border);">
+          <div>
+            <div class="logo-brand" style="margin-bottom:1.5rem;">
+              <div class="logo-icon-spark">⚡</div>
+              <span>ATHLETIX</span>
+            </div>
+            <h3 style="font-size:1.6rem; margin-bottom:0.8rem;">Join 25,000+ Verified Athletes</h3>
+            <p style="font-size:0.88rem; color:#94A3B8; line-height:1.6;">
+              Instant automated facility bookings, AI squad balancing, and regional tournament brackets.
+            </p>
+          </div>
+
+          <!-- Demo Quick Logins -->
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; color:var(--emerald-neon); text-transform:uppercase; margin-bottom:0.6rem;">Quick Demo Profiles</div>
+            <div style="display:flex; flex-direction:column; gap:0.4rem;">
+              <button class="btn btn-sm btn-glass" data-demo-role="player" style="justify-content:flex-start;">👤 Player: Zoya Khan</button>
+              <button class="btn btn-sm btn-glass" data-demo-role="coach" style="justify-content:flex-start;">🎯 Coach: Marcus Sterling</button>
+              <button class="btn btn-sm btn-glass" data-demo-role="admin" style="justify-content:flex-start;">🛡️ Admin: Operations Mode</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Form Panel -->
+        <div style="padding:2.5rem; display:flex; flex-direction:column; justify-content:center;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h3 id="authModalTitle" style="font-size:1.4rem;">Sign In</h3>
+            <button class="modal-close-btn" style="width:30px; height:30px;">✕</button>
+          </div>
+
+          <!-- Login Section -->
+          <div id="authLoginSection">
+            <form id="loginForm" style="display:flex; flex-direction:column; gap:1rem;">
+              <div>
+                <label style="font-size:0.78rem; font-weight:700; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Email Address</label>
+                <input type="email" value="zoya@athletix.io" required style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.7rem; border-radius:var(--radius-sm); color:white;">
+              </div>
+              <div>
+                <label style="font-size:0.78rem; font-weight:700; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Password</label>
+                <input type="password" value="••••••••••••" required style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.7rem; border-radius:var(--radius-sm); color:white;">
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top:0.5rem;">Sign In ⚡</button>
+            </form>
+
+            <div style="margin-top:1.5rem; text-align:center; font-size:0.85rem; color:var(--text-muted);">
+              Don't have an account? <span style="color:var(--emerald-neon); font-weight:700; cursor:pointer;" data-switch-auth="signup">Create Account</span>
+            </div>
+          </div>
+
+          <!-- Multi-Step Signup Section -->
+          <div id="authSignupSection" style="display:none;">
+            <!-- Step Indicators -->
+            <div style="display:flex; gap:0.5rem; margin-bottom:1.5rem;">
+              <div class="step-indicator-dot active" style="flex:1; height:4px; background:var(--emerald); border-radius:2px;"></div>
+              <div class="step-indicator-dot" style="flex:1; height:4px; background:var(--glass-border); border-radius:2px;"></div>
+              <div class="step-indicator-dot" style="flex:1; height:4px; background:var(--glass-border); border-radius:2px;"></div>
+            </div>
+
+            <!-- Step 1: Role Selection -->
+            <div class="signup-step-pane" style="display:block;">
+              <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">Select your primary platform role:</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-bottom:1.5rem;">
+                <div class="auth-role-card selected" data-role="player" style="background:var(--bg-surface); border:1px solid var(--emerald); padding:1rem; border-radius:var(--radius-md); cursor:pointer;">
+                  <div style="font-size:1.4rem;">🏃‍♂️</div>
+                  <div style="font-weight:700; color:white; font-size:0.9rem;">Player</div>
+                </div>
+                <div class="auth-role-card" data-role="coach" style="background:var(--bg-surface); border:1px solid var(--glass-border); padding:1rem; border-radius:var(--radius-md); cursor:pointer;">
+                  <div style="font-size:1.4rem;">🎯</div>
+                  <div style="font-weight:700; color:white; font-size:0.9rem;">Coach</div>
+                </div>
+                <div class="auth-role-card" data-role="owner" style="background:var(--bg-surface); border:1px solid var(--glass-border); padding:1rem; border-radius:var(--radius-md); cursor:pointer;">
+                  <div style="font-size:1.4rem;">🏟️</div>
+                  <div style="font-weight:700; color:white; font-size:0.9rem;">Facility Owner</div>
+                </div>
+                <div class="auth-role-card" data-role="organizer" style="background:var(--bg-surface); border:1px solid var(--glass-border); padding:1rem; border-radius:var(--radius-md); cursor:pointer;">
+                  <div style="font-size:1.4rem;">🏆</div>
+                  <div style="font-weight:700; color:white; font-size:0.9rem;">Organizer</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Personal Details -->
+            <div class="signup-step-pane" style="display:none;">
+              <div style="display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.5rem;">
+                <input type="text" id="signupNameInput" placeholder="Full Name" style="background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.7rem; border-radius:var(--radius-sm); color:white;">
+                <input type="email" id="signupEmailInput" placeholder="Email Address" style="background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.7rem; border-radius:var(--radius-sm); color:white;">
+                <input type="password" placeholder="Create Password" style="background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.7rem; border-radius:var(--radius-sm); color:white;">
+              </div>
+            </div>
+
+            <!-- Step 3: Sports Interests -->
+            <div class="signup-step-pane" style="display:none;">
+              <div style="margin-bottom:1.5rem;">
+                <label style="font-size:0.78rem; font-weight:700; color:var(--emerald-neon); display:block; margin-bottom:0.4rem;">Primary Sport Discipline</label>
+                <select style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.7rem; border-radius:var(--radius-sm); color:white; margin-bottom:0.8rem;">
+                  <option>⚽ Football / Turf</option>
+                  <option>🏏 Box Cricket</option>
+                  <option>🏸 Badminton</option>
+                  <option>🏀 Basketball</option>
+                </select>
+
+                <label style="font-size:0.78rem; font-weight:700; color:var(--cyan); display:block; margin-bottom:0.4rem;">Skill Self-Assessment</label>
+                <select style="width:100%; background:var(--bg-surface); border:1px solid var(--glass-border); padding:0.7rem; border-radius:var(--radius-sm); color:white;">
+                  <option>Diamond / Competitive (Tier 8-9)</option>
+                  <option>Intermediate (Tier 5-7)</option>
+                  <option>Beginner / Enthusiast (Tier 1-4)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Multi-step navigation buttons -->
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <button class="btn btn-secondary btn-sm" id="btnSignupPrevStep" style="display:none;">Back</button>
+              <button class="btn btn-primary btn-sm" id="btnSignupNextStep" style="margin-left:auto;">Continue →</button>
+              <button class="btn btn-primary btn-sm" id="btnCompleteSignup" style="display:none; margin-left:auto;">Create Account 🚀</button>
+            </div>
+
+            <div style="margin-top:1.2rem; text-align:center; font-size:0.85rem; color:var(--text-muted);">
+              Already have an account? <span style="color:var(--emerald-neon); font-weight:700; cursor:pointer;" data-switch-auth="login">Sign In</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Image Viewer Modal -->
+  <div class="modal-backdrop" id="galleryImageModal">
+    <div class="modal-dialog" style="max-width:700px;">
+      <div class="modal-header">
+        <h3 id="galleryImageTitle" style="font-size:1.2rem;">Facility Image</h3>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+          <img id="galleryFullImage" src="" alt="" style="width:100%; max-height:500px; object-fit:cover; border-radius:var(--radius-lg); display:block;">
+          
+          <!-- Navigation Arrows -->
+          <button class="btn btn-icon" id="galleryPrevBtn" style="position:absolute; left:10px; background:rgba(0,0,0,0.6); backdrop-filter:blur(10px);">◀</button>
+          <button class="btn btn-icon" id="galleryNextBtn" style="position:absolute; right:10px; background:rgba(0,0,0,0.6); backdrop-filter:blur(10px);">▶</button>
+        </div>
+        
+        <!-- Image Counter -->
+        <div id="galleryImageCounter" style="text-align:center; margin-top:1rem; color:var(--text-secondary); font-size:0.9rem;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Alert Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       SITE FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="logo-brand">
+            <div class="logo-icon-spark">⚡</div>
+            <span>ATHLETIX</span>
+          </div>
+          <p>
+            The world's leading AI-powered sports platform connecting players, certified coaches, and facilities in a unified ecosystem.
+          </p>
+          <div class="footer-social-links">
+            <a href="#" class="btn-icon">📸</a>
+            <a href="#" class="btn-icon">🐦</a>
+            <a href="#" class="btn-icon">💼</a>
+            <a href="#" class="btn-icon">▶️</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Platform</h4>
+          <ul class="footer-nav">
+            <li><a href="#facilities" data-nav="facilities">Book Facilities</a></li>
+            <li><a href="#tournaments" data-nav="tournaments">Tournaments</a></li>
+            <li><a href="#coaches" data-nav="coaches">Certified Coaches</a></li>
+            <li><a href="#community" data-nav="community">Sports Feed</a></li>
+            <li><a href="#home" onclick="document.querySelector('.ai-matchmaker-banner').scrollIntoView({behavior:'smooth'})">AI Matchmaker</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Disciplines</h4>
+          <ul class="footer-nav">
+            <li><a href="#facilities" data-nav="facilities">Football & Turf</a></li>
+            <li><a href="#facilities" data-nav="facilities">Box Cricket</a></li>
+            <li><a href="#facilities" data-nav="facilities">BWF Badminton</a></li>
+            <li><a href="#facilities" data-nav="facilities">NBA Hardwood</a></li>
+            <li><a href="#facilities" data-nav="facilities">Tennis & Padel</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Company</h4>
+          <ul class="footer-nav">
+            <li><a href="#about" data-nav="about">About ATHLETIX</a></li>
+            <li><a href="#about" data-nav="about">Mission & Values</a></li>
+            <li><a href="#about" data-nav="about">Careers</a></li>
+            <li><a href="#admin" data-nav="admin">Admin Operations</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Stay In The Game</h4>
+          <p style="font-size:0.88rem; margin-bottom:1rem;">Get weekly alerts on upcoming tournaments, coaching clinics, and weekend pickups.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); App.showToast('🎉 Subscribed to Athletix Weekly Digest!', 'success');">
+            <div class="newsletter-input-group">
+              <input type="email" placeholder="Enter your email" required>
+              <button type="submit" class="btn btn-sm btn-primary">Join</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 ATHLETIX Inc. All rights reserved. Built with AI-Powered Sports Tech.</div>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Security & Fair Play</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/ai-matchmaker.js"></script>
+  <script src="js/tournament.js"></script>
+  <script src="js/community.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
